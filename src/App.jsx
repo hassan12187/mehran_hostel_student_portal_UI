@@ -13,6 +13,7 @@ import Notices from './pages/Notices/Notices';
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import CheckAuth from './components/Reusable/CheckAuth';
+import Login from './pages/Auth/Login/Login';
 
 // Main App Component
 function App() {
@@ -103,7 +104,7 @@ const router=createBrowserRouter([
   },
    {
       path:"/login",
-      element:<h1>Login Page</h1>
+      element:<Login />
     }
 ])
   return (

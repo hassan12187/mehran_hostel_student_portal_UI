@@ -12,8 +12,13 @@ import {
   faUtensils,
   faClipboardList
 } from '@fortawesome/free-solid-svg-icons';
+import useGetQuery from '../../hooks/useGetQuery';
+import {useCustom} from "../../context/Store";
 
 const StudentDashboard = () => {
+  const {token}=useCustom();
+  const {data}=useGetQuery(`student`,'/api/student/details',token);
+  console.log(data);
   // Pakistani Student Data
   const studentData = {
     name: "Ali Ahmed",
