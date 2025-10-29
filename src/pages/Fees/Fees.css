@@ -1,0 +1,727 @@
+.fees-page {
+  padding: 25px;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 70px);
+}
+
+/* Page Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 25px;
+  border-left: 5px solid #2c5530;
+}
+
+.header-content h1 {
+  color: #1f2937;
+  font-size: 2rem;
+  margin-bottom: 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-content h1 svg {
+  color: #2c5530;
+}
+
+.header-content p {
+  color: #6b7280;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.header-actions .btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #2c5530, #4a7c59);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.header-actions .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(44, 85, 48, 0.3);
+}
+
+/* Fees Tabs */
+.fees-tabs {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
+.tabs-container {
+  display: flex;
+  background: #f8fafc;
+  padding: 5px;
+  border-radius: 12px;
+  margin: 10px;
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #6b7280;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.tab-btn:hover {
+  color: #2c5530;
+  background: rgba(44, 85, 48, 0.1);
+}
+
+.tab-btn.active {
+  background: white;
+  color: #2c5530;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Fees Content */
+.fees-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Overview Section */
+.fees-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.summary-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-left: 4px solid;
+}
+
+.summary-card.total {
+  border-left-color: #6366f1;
+}
+
+.summary-card.paid {
+  border-left-color: #10b981;
+}
+
+.summary-card.due {
+  border-left-color: #ef4444;
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.summary-card.total .card-icon {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.summary-card.paid .card-icon {
+  background: linear-gradient(135deg, #10b981, #34d399);
+}
+
+.summary-card.due .card-icon {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+}
+
+.card-content h3 {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-content .amount {
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.due-date {
+  color: #ef4444;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Progress Section */
+.progress-section {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.progress-header h3 {
+  color: #374151;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.progress-header span {
+  color: #2c5530;
+  font-weight: 600;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background-color: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2c5530, #4a7c59);
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.progress-stats {
+  display: flex;
+  justify-content: space-between;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* Quick Actions */
+.quick-actions {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.quick-actions h3 {
+  color: #374151;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #2c5530, #4a7c59);
+  color: white;
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(44, 85, 48, 0.3);
+}
+
+.action-btn.secondary {
+  background: linear-gradient(135deg, #1e40af, #3730a3);
+  color: white;
+}
+
+.action-btn.secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(30, 64, 175, 0.3);
+}
+
+.action-btn.outline {
+  background: transparent;
+  border: 2px solid #e5e7eb;
+  color: #374151;
+}
+
+.action-btn.outline:hover {
+  border-color: #2c5530;
+  color: #2c5530;
+  transform: translateY(-2px);
+}
+
+.action-btn.small {
+  padding: 8px 16px;
+  font-size: 0.8rem;
+}
+
+/* Upcoming Dues */
+.upcoming-dues {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.upcoming-dues h3 {
+  color: #374151;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.dues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.due-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid #ef4444;
+}
+
+.due-info h4 {
+  color: #1f2937;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.due-info p {
+  color: #6b7280;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.due-date {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #ef4444;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.due-amount {
+  text-align: right;
+}
+
+.due-amount strong {
+  display: block;
+  color: #1f2937;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.pay-now-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pay-now-btn:hover {
+  background: #dc2626;
+}
+
+/* Fee Structure */
+.fee-structure {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.section-header {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.section-header h3 {
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+}
+
+.section-header p {
+  color: #6b7280;
+  margin: 0;
+}
+
+.fees-table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.fees-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fees-table th {
+  background: #f8fafc;
+  padding: 15px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 2px solid #e5e7eb;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fees-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.fees-table tr:hover {
+  background: #f8fafc;
+}
+
+.fee-category strong {
+  color: #1f2937;
+}
+
+.fee-description {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.fee-amount {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.paid,
+.status-badge.completed {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.status-icon {
+  font-size: 0.7rem;
+}
+
+.fees-summary {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.summary-total {
+  max-width: 300px;
+  margin-left: auto;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.summary-row span {
+  color: #6b7280;
+}
+
+.summary-row strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.summary-row .paid {
+  color: #059669;
+}
+
+.summary-row .due {
+  color: #ef4444;
+}
+
+.summary-divider {
+  height: 2px;
+  background: #e5e7eb;
+  margin: 10px 0;
+}
+
+.summary-row.total {
+  border-bottom: none;
+  font-size: 1.1rem;
+  padding-top: 15px;
+}
+
+/* Payment History */
+.payment-history {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.history-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.payment-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #10b981;
+}
+
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.payment-info h4 {
+  color: #1f2937;
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+}
+
+.transaction-id {
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.payment-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.payment-status.completed {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.payment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-item span {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.detail-item strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.detail-item .amount {
+  color: #059669;
+}
+
+.detail-item .method {
+  color: #2c5530;
+  font-weight: 600;
+}
+
+.payment-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  color: #d1d5db;
+  margin-bottom: 20px;
+}
+
+.empty-state h4 {
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+  .history-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .fees-page {
+    padding: 15px;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 25px;
+  }
+  
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .due-item {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .due-amount {
+    text-align: center;
+  }
+  
+  .tabs-container {
+    flex-direction: column;
+  }
+  
+  .fees-table-container {
+    overflow-x: auto;
+  }
+  
+  .fees-table {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    padding: 20px;
+  }
+  
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .payment-actions {
+    flex-direction: column;
+  }
+  
+  .action-btn.small {
+    width: 100%;
+  }
+}
