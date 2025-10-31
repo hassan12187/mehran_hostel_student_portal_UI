@@ -4,8 +4,11 @@ const StoreContext=createContext(null);
 
 export const Store=({children})=>{
     const [token,setToken]=useState(localStorage.getItem("token"));
-
-    return <StoreContext value={{token,setToken}}>
+    const addToken=(token)=>{
+        setToken(token);
+        localStorage.setItem("token",token);
+    };
+    return <StoreContext value={{token,addToken}}>
         {children}
     </StoreContext>
 };

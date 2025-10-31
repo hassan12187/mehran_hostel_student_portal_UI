@@ -5,7 +5,7 @@ import Axios from '../../../components/Reusable/Axios';
 import { useCustom } from '../../../context/Store';
 
 const Login = () => {
-  const {setToken}=useCustom();
+  const {addToken}=useCustom();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -58,10 +58,11 @@ const Login = () => {
 
     try {
         const result = await Axios.post('/static/login',formData,{
+          withCredentials:true
         });
         console.log(result);
         if(result.status==200){
-          setToken(result?.data.token);
+          addToken(result?.data.token);
           return navigate("/");
         };
         if(result.status==401){

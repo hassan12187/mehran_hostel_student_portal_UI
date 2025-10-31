@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './Profile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -12,11 +12,16 @@ import {
   faSave,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
+import useGetQuery from '../../hooks/useGetQuery';
+import { useCustom } from '../../context/Store';
 
 const Profile = () => {
+  const {token}=useCustom();
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState('personal');
-
+  const {data}=useGetQuery('student_details','/api/student/details',token);
+  const memoizedData=useMemo(()=>data?.data || {},[data])
+  console.log(data);
   // Student Data
   const [studentData, setStudentData] = useState({
     personalInfo: {
@@ -85,12 +90,12 @@ const Profile = () => {
           {isEditing ? (
             <input
               type="text"
-              value={editData.personalInfo.fullName}
+              value={memoizedData?.data}
               onChange={(e) => handleChange('personalInfo', 'fullName', e.target.value)}
               className="edit-input"
             />
           ) : (
-            <p>{studentData.personalInfo.fullName}</p>
+            <p>{memoizedData?.name}</p>
           )}
         </div>
 
@@ -308,7 +313,7 @@ const Profile = () => {
         </div>
         
         <div className="profile-info">
-          <h1>{studentData.personalInfo.fullName}</h1>
+          <h1>{memoizedData?.name}</h1>
           <p>{studentData.academicInfo.department} • {studentData.academicInfo.semester}</p>
           <div className="student-badges">
             <span className="badge primary">Active</span>
@@ -369,7 +374,7 @@ const Profile = () => {
             <div className="stats-list">
               <div className="stat-item">
                 <span className="stat-label">Room No.</span>
-                <span className="stat-value">G-104</span>
+                <span className="stat-value">{memoizedData?.room?.room_no}</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Attendance</span>
