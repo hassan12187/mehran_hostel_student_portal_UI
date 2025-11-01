@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './Room.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -23,10 +23,16 @@ import {
   faCalendarAlt,
   faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
+import useGetQuery from '../../hooks/useGetQuery';
+import { useCustom } from '../../context/Store';
 
 const Room = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  const {token}=useCustom();
 
+  const {data}=useGetQuery('room','/api/student/room',token);
+  const memoizedData=useMemo(()=>data?.data || {},[data]);
+  console.log(memoizedData);
   // Room Data
   const roomData = {
     roomNumber: "G-104",
@@ -207,7 +213,7 @@ const Room = () => {
       <div className="room-basic-info">
         <div className="room-header">
           <div className="room-title">
-            <h2>Room {roomData.roomNumber}</h2>
+            <h2>Room {memoizedData?.room?.room_no}</h2>
             <span className="room-type">{roomData.type}</span>
           </div>
           <div className="room-status">
@@ -319,48 +325,48 @@ const Room = () => {
       <div className="roommates-header">
         <h3>Roommates</h3>
         <div className="roommates-count">
-          <span>{roommates.length} Roommates</span>
+          <span>{memoizedData?.room?.occupants_info?.length} Roommates</span>
         </div>
       </div>
 
       <div className="roommates-grid">
-        {roommates.map(roommate => (
-          <div key={roommate.id} className="roommate-card">
+        {memoizedData?.room?.occupants_info?.map(roommate => (
+          <div key={roommate._id} className="roommate-card">
             <div className="roommate-header">
               <div className="roommate-avatar">
                 <FontAwesomeIcon icon={faUser} />
               </div>
               <div className="roommate-basic-info">
-                <h4>{roommate.name}</h4>
-                <p>{roommate.department} • {roommate.semester}</p>
-                <span className="student-id">{roommate.studentId}</span>
+                <h4>{roommate.student_name}</h4>
+                <p>{roommate.department || "Department"} • {roommate.semester || "Semester"}</p>
+                <span className="student-id">Student ID: {roommate.student_roll_no || "Student ID"}</span>
               </div>
             </div>
 
             <div className="roommate-details">
               <div className="detail-row">
-                <div className="detail-item">
+                <div className="detail-item p-2">
                   <strong>Contact:</strong>
-                  <span>{roommate.contact}</span>
+                  <span>{roommate.student_cellphone}</span>
                 </div>
-                <div className="detail-item">
+                <div className="detail-item p-2">
                   <strong>Email:</strong>
-                  <span>{roommate.email}</span>
+                  <span>{roommate.student_email}</span>
                 </div>
               </div>
               <div className="detail-row">
-                <div className="detail-item">
+                <div className="detail-item p-2">
                   <strong>Home City:</strong>
-                  <span>{roommate.homeCity}</span>
+                  <span>{roommate.city}</span>
                 </div>
-                <div className="detail-item">
+                <div className="detail-item p-2">
                   <strong>Allocated Since:</strong>
                   <span>{roommate.allocationDate}</span>
                 </div>
               </div>
-              <div className="detail-item full-width">
+              <div className="detail-item p-2 full-width">
                 <strong>Emergency Contact:</strong>
-                <span>{roommate.emergencyContact}</span>
+                <span>{roommate.student_cellphone}</span>
               </div>
             </div>
 

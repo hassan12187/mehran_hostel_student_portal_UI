@@ -21,7 +21,7 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState('personal');
   const {data}=useGetQuery('student_details','/api/student/details',token);
   const memoizedData=useMemo(()=>data?.data || {},[data])
-  console.log(data);
+  console.log(memoizedData);
   // Student Data
   const [studentData, setStudentData] = useState({
     personalInfo: {
@@ -95,7 +95,7 @@ const Profile = () => {
               className="edit-input"
             />
           ) : (
-            <p>{memoizedData?.name}</p>
+            <p>{memoizedData?.student_name}</p>
           )}
         </div>
 
@@ -115,7 +115,7 @@ const Profile = () => {
               placeholder="XXXXX-XXXXXXX-X"
             />
           ) : (
-            <p>{studentData.personalInfo.cnic}</p>
+            <p>{memoizedData?.cnic_no}</p>
           )}
         </div>
 
@@ -129,7 +129,7 @@ const Profile = () => {
               className="edit-input"
             />
           ) : (
-            <p>{studentData.personalInfo.dateOfBirth}</p>
+            <p>{memoizedData?.date_of_birth}</p>
           )}
         </div>
 
@@ -145,7 +145,7 @@ const Profile = () => {
               <option value="Female">Female</option>
             </select>
           ) : (
-            <p>{studentData.personalInfo.gender}</p>
+            <p>{memoizedData?.gender}</p>
           )}
         </div>
 
@@ -190,7 +190,7 @@ const Profile = () => {
               className="edit-input"
             />
           ) : (
-            <p>{studentData.contactInfo.email}</p>
+            <p>{memoizedData?.student_email}</p>
           )}
         </div>
 
@@ -207,7 +207,7 @@ const Profile = () => {
               className="edit-input"
             />
           ) : (
-            <p>{studentData.contactInfo.phone}</p>
+            <p>{memoizedData?.student_cellphone}</p>
           )}
         </div>
 
@@ -224,7 +224,7 @@ const Profile = () => {
               className="edit-input"
             />
           ) : (
-            <p>{studentData.contactInfo.emergencyContact}</p>
+            <p>{memoizedData?.student_cellphone}</p>
           )}
         </div>
 
@@ -241,7 +241,7 @@ const Profile = () => {
               rows="3"
             />
           ) : (
-            <p>{studentData.contactInfo.address}</p>
+            <p>{memoizedData?.postal_address}</p>
           )}
         </div>
 
@@ -258,7 +258,7 @@ const Profile = () => {
               rows="3"
             />
           ) : (
-            <p>{studentData.contactInfo.permanentAddress}</p>
+            <p>{memoizedData?.permanent_address}</p>
           )}
         </div>
       </div>
@@ -313,7 +313,7 @@ const Profile = () => {
         </div>
         
         <div className="profile-info">
-          <h1>{memoizedData?.name}</h1>
+          <h1>{memoizedData?.student_name}</h1>
           <p>{studentData.academicInfo.department} • {studentData.academicInfo.semester}</p>
           <div className="student-badges">
             <span className="badge primary">Active</span>
@@ -382,7 +382,7 @@ const Profile = () => {
               </div>
               <div className="stat-item">
                 <span className="stat-label">Complaints</span>
-                <span className="stat-value warning">2 Pending</span>
+                <span className="stat-value warning">{memoizedData?.complaints.length} Pending</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Gate Pass</span>

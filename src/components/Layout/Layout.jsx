@@ -3,10 +3,11 @@ import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import './Layout.css';
 import { Outlet } from 'react-router-dom';
+import { useCustom } from '../../context/Store';
 
 const Layout = ({ userData }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-
+  const {logout}=useCustom();
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -14,7 +15,7 @@ const Layout = ({ userData }) => {
   const handleLogout = () => {
     // Logout logic yahan aayegi
     console.log('Logging out...');
-    alert('Logout functionality will be implemented with backend');
+    logout();
   };
 
   return (
