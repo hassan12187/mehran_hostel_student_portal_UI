@@ -382,7 +382,7 @@ const Profile = () => {
               </div>
               <div className="stat-item">
                 <span className="stat-label">Complaints</span>
-                <span className="stat-value warning">{memoizedData?.complaints.length} Pending</span>
+                <span className="stat-value warning">{memoizedData?.complaints?.length} Pending</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Gate Pass</span>

@@ -25,9 +25,9 @@ const Sidebar = ({ isOpen,  onLogout }) => {
     { id: '/fees', label: 'Fees', icon: faMoneyBill },
     { id: '/complaints', label: 'Complaints', icon: faCommentDots },
     { id: '/gatepass', label: 'Gate Pass', icon: faIdCard },
-    { id: '/attendance', label: 'Attendance', icon: faCalendarCheck },
+    // { id: '/attendance', label: 'Attendance', icon: faCalendarCheck },
     { id: '/mess', label: 'Mess', icon: faUtensils },
-    { id: '/notices', label: 'Notices', icon: faBullhorn },
+    // { id: '/notices', label: 'Notices', icon: faBullhorn },
     { id: '/visitors', label: 'Visitors', icon: faUsers },
   ];
 

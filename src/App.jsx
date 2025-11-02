@@ -91,14 +91,14 @@ const router=createBrowserRouter([
     path:"/visitors",
     element:<CheckAuth> <Visitors/></CheckAuth>
   },
-  {
-    path:"/attendance",
-    element:<CheckAuth> <Attendance/></CheckAuth>
-  },
-  {
-    path:"/notices",
-    element:<CheckAuth> <Notices/></CheckAuth>
-  }
+  // {
+  //   path:"/attendance",
+  //   element:<CheckAuth> <Attendance/></CheckAuth>
+  // },
+  // {
+  //   path:"/notices",
+  //   element:<CheckAuth> <Notices/></CheckAuth>
+  // }
     ]
    
   },

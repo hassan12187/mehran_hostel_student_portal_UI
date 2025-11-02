@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './Complaints.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -18,11 +18,27 @@ import {
   faEdit,
   faPaperPlane
 } from '@fortawesome/free-solid-svg-icons';
+import useGetQuery from "../../hooks/useGetQuery";
+import {useCustom} from "../../context/Store";
+import { PostService } from '../../services/requestService';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const Complaints = () => {
+  const queryClient=useQueryClient();
   const [activeTab, setActiveTab] = useState('all');
   const [showComplaintForm, setShowComplaintForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const {token}=useCustom();
+
+  const {data}=useGetQuery("complaints",'/api/student/complaints',token);
+  const memoizedData=useMemo(()=>data?.data || [],[data]);
+  const mutate=useMutation({
+    mutationFn:async({url,data})=>await PostService(url,data,token),
+    onSuccess:()=>{
+      queryClient.invalidateQueries({queryKey:["complaints"]});
+    }
+  })
+  console.log(memoizedData);
 
   // Complaint Categories
   const complaintCategories = [
@@ -124,43 +140,45 @@ const Complaints = () => {
     title: '',
     category: '',
     description: '',
-    priority: 'medium',
-    room: 'G-104'
+    priority: '',
+    room: ''
   });
 
   // Filter complaints based on active tab and search
-  const filteredComplaints = complaints.filter(complaint => {
-    const matchesTab = activeTab === 'all' || complaint.status === activeTab;
-    const matchesSearch = complaint.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         complaint.description.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesTab && matchesSearch;
-  });
+  // const filteredComplaints = complaints.filter(complaint => {
+  //   const matchesTab = activeTab === 'all' || complaint.status === activeTab;
+  //   const matchesSearch = complaint.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //                        complaint.description.toLowerCase().includes(searchTerm.toLowerCase());
+  //   return matchesTab && matchesSearch;
+  // });
 
   const getStatusInfo = (status) => complaintStatus[status] || complaintStatus.pending;
 
   const getCategoryInfo = (categoryId) => 
     complaintCategories.find(cat => cat.id === categoryId) || complaintCategories[5];
 
-  const handleSubmitComplaint = (e) => {
+  const handleSubmitComplaint =async (e) => {
     e.preventDefault();
-    
-    const complaint = {
-      id: `COMP-2024-00${complaints.length + 1}`,
-      ...newComplaint,
-      date: new Date().toISOString().split('T')[0],
-      status: 'pending',
-      assignedTo: 'Pending Assignment',
-      lastUpdate: new Date().toLocaleString(),
-      comments: []
-    };
+    mutate.mutate({url:"/api/student/complaint",data:newComplaint});
+    // const result = await PostService("/api/student/complaint",newComplaint,token);
+    // console.log(result);
+    // const complaint = {
+    //   id: `COMP-2024-00${complaints.length + 1}`,
+    //   ...newComplaint,
+    //   date: new Date().toISOString().split('T')[0],
+    //   status: 'pending',
+    //   assignedTo: 'Pending Assignment',
+    //   lastUpdate: new Date().toLocaleString(),
+    //   comments: []
+    // };
 
-    setComplaints([complaint, ...complaints]);
+    // setComplaints([complaint, ...complaints]);
     setNewComplaint({
       title: '',
       category: '',
       description: '',
-      priority: 'medium',
-      room: 'G-104'
+      priority: '',
+      room: ''
     });
     setShowComplaintForm(false);
   };
@@ -210,11 +228,11 @@ const Complaints = () => {
           <div className="complaint-details">
             <div className="detail-item">
               <strong>Room:</strong>
-              <span>{complaint.room}</span>
+              <span>{complaint?.room_id?.room_no}</span>
             </div>
             <div className="detail-item">
               <strong>Date:</strong>
-              <span>{complaint.date}</span>
+              <span>{new Date(complaint?.created_at).toLocaleDateString()}</span>
             </div>
             <div className="detail-item">
               <strong>Priority:</strong>
@@ -228,7 +246,7 @@ const Complaints = () => {
             </div>
           </div>
 
-          {complaint.comments.length > 0 && (
+          {complaint?.comments?.length > 0 && (
             <div className="complaint-comments">
               <div className="comments-header">
                 <strong>Latest Update:</strong>
@@ -361,9 +379,9 @@ const Complaints = () => {
 
       {/* Complaints List */}
       <div className="complaints-content">
-        {filteredComplaints.length > 0 ? (
+        {memoizedData?.length > 0 ? (
           <div className="complaints-grid">
-            {filteredComplaints.map(renderComplaintCard)}
+            {memoizedData?.map(renderComplaintCard)}
           </div>
         ) : (
           <div className="empty-state">
