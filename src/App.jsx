@@ -14,6 +14,7 @@ import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import CheckAuth from './components/Reusable/CheckAuth';
 import Login from './pages/Auth/Login/Login';
+import ChangePassword from './pages/changepassword/ChangePassword';
 
 // Main App Component
 function App() {
@@ -91,6 +92,7 @@ const router=createBrowserRouter([
     path:"/visitors",
     element:<CheckAuth> <Visitors/></CheckAuth>
   },
+  
   // {
   //   path:"/attendance",
   //   element:<CheckAuth> <Attendance/></CheckAuth>
@@ -105,7 +107,13 @@ const router=createBrowserRouter([
    {
       path:"/login",
       element:<Login />
-    }
+    },
+    {
+    path:"/change-password",
+    element:<CheckAuth>
+      <ChangePassword/>
+    </CheckAuth>
+  }
 ])
   return (
     <div className="App">

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './Header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faUser, faBars, faCog, faLock, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ toggleSidebar, userData, onLogout }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-
+  const navigate=useNavigate();
   const user = userData || {
     name: "Ali Ahmed",
     email: "ali.ahmed@student.edu.pk",
@@ -62,7 +63,9 @@ const Header = ({ toggleSidebar, userData, onLogout }) => {
                 <span>Settings</span>
               </button>
               
-              <button className="dropdown-item" onClick={() => {/* Change password functionality */}}>
+              <button className="dropdown-item" onClick={() => {
+                navigate("change-password")
+                /* Change password functionality */}}>
                 <FontAwesomeIcon icon={faLock} />
                 <span>Change Password</span>
               </button>

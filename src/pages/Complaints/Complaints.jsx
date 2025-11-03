@@ -204,7 +204,7 @@ const Complaints = () => {
     const categoryInfo = getCategoryInfo(complaint.category);
 
     return (
-      <div key={complaint.id} className="complaint-card">
+      <div key={complaint._id} className="complaint-card">
         <div className="complaint-header">
           <div className="complaint-title-section">
             <div className="category-badge" style={{ backgroundColor: categoryInfo.color }}>

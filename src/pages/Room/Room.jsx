@@ -224,28 +224,28 @@ const Room = () => {
         </div>
 
         <div className="room-details-grid">
-          <div className="detail-item">
+          <div className="detail-item p-2">
             <FontAwesomeIcon icon={faHome} className="detail-icon" />
             <div className="detail-content">
               <label>Block</label>
-              <span>{roomData.block}</span>
+              <span>{memoizedData?.room?.block?.block_no}</span>
             </div>
           </div>
-          <div className="detail-item">
+          <div className="detail-item p-2">
             <FontAwesomeIcon icon={faHome} className="detail-icon" />
             <div className="detail-content">
               <label>Floor</label>
               <span>{roomData.floor}</span>
             </div>
           </div>
-          <div className="detail-item">
+          <div className="detail-item p-2">
             <FontAwesomeIcon icon={faCalendarAlt} className="detail-icon" />
             <div className="detail-content">
               <label>Allocation Date</label>
               <span>{roomData.allocationDate}</span>
             </div>
           </div>
-          <div className="detail-item">
+          <div className="detail-item p-2">
             <FontAwesomeIcon icon={faCalendarAlt} className="detail-icon" />
             <div className="detail-content">
               <label>Vacating Date</label>
