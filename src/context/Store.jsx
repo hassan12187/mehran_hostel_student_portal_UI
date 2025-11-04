@@ -12,7 +12,7 @@ export const Store=({children})=>{
         localStorage.removeItem("token");
         setToken("");
     };
-    return <StoreContext value={{token,addToken,logout}}>
+    return <StoreContext value={{token,addToken,logout,setToken}}>
         {children}
     </StoreContext>
 };

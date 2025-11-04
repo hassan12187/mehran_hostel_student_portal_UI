@@ -134,7 +134,7 @@ const Login = () => {
                 Password
               </label>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={!showPassword ? 'text' : 'password'}
                   id="password"
                   name='password'
                   className={`form-control`}

@@ -15,6 +15,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import CheckAuth from './components/Reusable/CheckAuth';
 import Login from './pages/Auth/Login/Login';
 import ChangePassword from './pages/changepassword/ChangePassword';
+import ForgotPassword from './pages/Auth/ForgotPassword/ForgotPassword';
 
 // Main App Component
 function App() {
@@ -113,6 +114,10 @@ const router=createBrowserRouter([
     element:<CheckAuth>
       <ChangePassword/>
     </CheckAuth>
+  },
+  {
+    path:"/forgot-password",
+    element:<ForgotPassword />
   }
 ])
   return (
