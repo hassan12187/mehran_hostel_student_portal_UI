@@ -32,7 +32,7 @@ const Room = () => {
 
   const {data}=useGetQuery('room','/api/student/room',token);
   const memoizedData=useMemo(()=>data?.data || {},[data]);
-  console.log(memoizedData);
+  // console.log(data);
   // Room Data
   const roomData = {
     roomNumber: "G-104",

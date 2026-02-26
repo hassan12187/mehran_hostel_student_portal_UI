@@ -17,58 +17,58 @@ import {useCustom} from "../../context/Store";
 
 const StudentDashboard = () => {
   const {token}=useCustom();
-  const {data}=useGetQuery(`student`,'/api/student/details',token);
-  console.log(data);
+  const {data:studentData}=useGetQuery(`student`,'/api/student/details',token);
+  console.log(studentData);
   // Pakistani Student Data
-  const studentData = {
-    name: "Ali Ahmed",
-    room: "G-104",
-    department: "Computer Science",
-    semester: "6th Semester",
-    university: "NED University",
-    fees: {
-      paid: 1500,
-      total: 6500,
-      dueDate: "2024-03-15",
-      currency: "PKR"
-    },
-    complaints: 2,
-    gatePasses: 1,
-    attendance: "92%"
-  };
+  // const studentData = {
+  //   name: "Ali Ahmed",
+  //   room: "G-104",
+  //   department: "Computer Science",
+  //   semester: "6th Semester",
+  //   university: "NED University",
+  //   fees: {
+  //     paid: 1500,
+  //     total: 6500,
+  //     dueDate: "2024-03-15",
+  //     currency: "PKR"
+  //   },
+  //   complaints: 2,
+  //   gatePasses: 1,
+  //   attendance: "92%"
+  // };
 
   const quickStats = [
     {
       title: "Room Number",
-      value: studentData.room,
+      value: studentData?.student_roll_no,
       icon: faHome,
       color: "#2c5530",
       bgColor: "#e8f5e8"
     },
     {
       title: "Fees Paid",
-      value: `${studentData.fees.currency} ${studentData.fees.paid.toLocaleString()}/${studentData.fees.total.toLocaleString()}`,
+      value: "0",
       icon: faMoneyBill,
       color: "#1e40af",
       bgColor: "#e0e7ff"
     },
     {
       title: "Pending Complaints",
-      value: studentData.complaints,
+      value: 0,
       icon: faCommentDots,
       color: "#dc2626",
       bgColor: "#fef2f2"
     },
     {
       title: "Gate Passes",
-      value: studentData.gatePasses,
+      value: "0",
       icon: faIdCard,
       color: "#7c3aed",
       bgColor: "#f3e8ff"
     },
     {
       title: "Attendance",
-      value: studentData.attendance,
+      value: "0",
       icon: faClipboardList,
       color: "#059669",
       bgColor: "#d1fae5"
@@ -114,15 +114,16 @@ const StudentDashboard = () => {
       {/* Welcome Section */}
       <div className="welcome-section">
         <div className="welcome-content">
-          <h1>Welcome back, {studentData.name}! 👋</h1>
+          <h1>Welcome back, {studentData?.student_name}! 👋</h1>
           <p>Here's your dashboard overview for today - {new Date().toLocaleDateString('en-PK')}</p>
         </div>
       </div>
 
       {/* Quick Stats Grid */}
       <div className="stats-grid">
-        {quickStats.map((stat, index) => (
-          <div key={index} className="stat-card">
+        {quickStats.map((stat, index) => {
+          console.log(stat);
+          return <div key={index} className="stat-card">
             <div className="stat-icon" style={{ 
               backgroundColor: stat.bgColor,
               color: stat.color 
@@ -130,11 +131,11 @@ const StudentDashboard = () => {
               <FontAwesomeIcon icon={stat.icon} />
             </div>
             <div className="stat-content">
-              <h3>{stat.value}</h3>
-              <p>{stat.title}</p>
+              <h3>{stat?.value}</h3>
+              <p>{stat?.title}</p>
             </div>
           </div>
-        ))}
+})}
       </div>
 
       {/* Main Content Grid */}
@@ -150,23 +151,23 @@ const StudentDashboard = () => {
             <div className="info-grid">
               <div className="info-item">
                 <label>Full Name</label>
-                <p>{studentData.name}</p>
+                <p>{studentData?.student_name}</p>
               </div>
               <div className="info-item">
                 <label>Room No.</label>
-                <p>{studentData.room}</p>
+                <p>{studentData?.room_no}</p>
               </div>
               <div className="info-item">
                 <label>Department</label>
-                <p>{studentData.department}</p>
+                <p>{studentData?.department}</p>
               </div>
               <div className="info-item">
                 <label>Semester</label>
-                <p>{studentData.semester}</p>
+                <p>{studentData?.semester}</p>
               </div>
               <div className="info-item">
                 <label>University</label>
-                <p>{studentData.university}</p>
+                <p>{studentData?.university}</p>
               </div>
               <div className="info-item">
                 <label>Student Status</label>
@@ -184,28 +185,28 @@ const StudentDashboard = () => {
             <div className="progress-section">
               <div className="progress-header">
                 <span>Payment Progress</span>
-                <span>{Math.round((studentData.fees.paid / studentData.fees.total) * 100)}%</span>
+                <span>{Math.round((studentData?.fees?.paid / studentData?.fees?.total) * 100)}%</span>
               </div>
               <div className="progress-bar">
                 <div 
                   className="progress-fill"
-                  style={{ width: `${(studentData.fees.paid / studentData.fees.total) * 100}%` }}
+                  style={{ width: `${(studentData?.fees?.paid / studentData?.fees?.total) * 100}%` }}
                 ></div>
               </div>
               <div className="fee-details">
                 <div className="fee-item">
                   <span>Paid:</span>
-                  <strong>{studentData.fees.currency} {studentData.fees.paid.toLocaleString()}</strong>
+                  <strong>{studentData?.fees?.currency} {studentData?.fees?.paid.toLocaleString()}</strong>
                 </div>
                 <div className="fee-item">
                   <span>Due:</span>
                   <strong className="due-amount">
-                    {studentData.fees.currency} {(studentData.fees.total - studentData.fees.paid).toLocaleString()}
+                    {studentData?.fees?.currency} {(studentData?.fees?.total - studentData?.fees?.paid).toLocaleString()}
                   </strong>
                 </div>
                 <div className="fee-item">
                   <span>Due Date:</span>
-                  <span className="due-date">{studentData.fees.dueDate}</span>
+                  <span className="due-date">{studentData?.fees?.dueDate}</span>
                 </div>
               </div>
             </div>
