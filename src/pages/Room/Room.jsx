@@ -30,9 +30,9 @@ const Room = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const {token}=useCustom();
 
-  const {data}=useGetQuery('room','/api/student/room',token);
+  const {data,isLoading}=useGetQuery('room','/api/student/room',token);
   const memoizedData=useMemo(()=>data?.data || {},[data]);
-  // console.log(data);
+  if(isLoading)return <h1>Loading...</h1>;
   // Room Data
   const roomData = {
     roomNumber: "G-104",
@@ -211,9 +211,13 @@ const Room = () => {
     <div className="overview-tab">
       {/* Room Basic Info */}
       <div className="room-basic-info">
-        <div className="room-header">
+        {
+          (data?.length>0) && 
+          <>
+          
+          <div className="room-header">
           <div className="room-title">
-            <h2>Room {memoizedData?.room?.room_no}</h2>
+            <h2>Room {memoizedData?.room?.room_no || "Not Assigned"}</h2>
             <span className="room-type">{roomData.type}</span>
           </div>
           <div className="room-status">
@@ -222,8 +226,7 @@ const Room = () => {
             </div>
           </div>
         </div>
-
-        <div className="room-details-grid">
+          <div className="room-details-grid">
           <div className="detail-item p-2">
             <FontAwesomeIcon icon={faHome} className="detail-icon" />
             <div className="detail-content">
@@ -253,6 +256,11 @@ const Room = () => {
             </div>
           </div>
         </div>
+        </>
+        }
+        
+
+      
       </div>
 
       {/* Room Amenities */}

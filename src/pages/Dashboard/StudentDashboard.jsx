@@ -17,7 +17,7 @@ import {useCustom} from "../../context/Store";
 
 const StudentDashboard = () => {
   const {token}=useCustom();
-  const {data:studentData}=useGetQuery(`student`,'/api/student/details',token);
+  const {data:studentData}=useGetQuery(`student`,'/api/student/dashboard-details',token);
   console.log(studentData);
   // Pakistani Student Data
   // const studentData = {
@@ -155,7 +155,7 @@ const StudentDashboard = () => {
               </div>
               <div className="info-item">
                 <label>Room No.</label>
-                <p>{studentData?.room_no}</p>
+                <p>{studentData?.room_no || "Not Assigned"}</p>
               </div>
               <div className="info-item">
                 <label>Department</label>
@@ -185,28 +185,28 @@ const StudentDashboard = () => {
             <div className="progress-section">
               <div className="progress-header">
                 <span>Payment Progress</span>
-                <span>{Math.round((studentData?.fees?.paid / studentData?.fees?.total) * 100)}%</span>
+                <span>{Math.round((studentData?.totalPaid / studentData?.totalAmount) * 100)}%</span>
               </div>
               <div className="progress-bar">
                 <div 
                   className="progress-fill"
-                  style={{ width: `${(studentData?.fees?.paid / studentData?.fees?.total) * 100}%` }}
+                  style={{ width: `${(studentData?.totalPaid / studentData?.totalAmount) * 100}%` }}
                 ></div>
               </div>
               <div className="fee-details">
                 <div className="fee-item">
                   <span>Paid:</span>
-                  <strong>{studentData?.fees?.currency} {studentData?.fees?.paid.toLocaleString()}</strong>
+                  <strong>Rs. {studentData?.totalPaid?.toLocaleString()}</strong>
                 </div>
                 <div className="fee-item">
                   <span>Due:</span>
                   <strong className="due-amount">
-                    {studentData?.fees?.currency} {(studentData?.fees?.total - studentData?.fees?.paid).toLocaleString()}
+                    Rs. {(studentData?.balanceDue)?.toLocaleString()}
                   </strong>
                 </div>
                 <div className="fee-item">
                   <span>Due Date:</span>
-                  <span className="due-date">{studentData?.fees?.dueDate}</span>
+                  <span className="due-date">{studentData?.dueDate}</span>
                 </div>
               </div>
             </div>

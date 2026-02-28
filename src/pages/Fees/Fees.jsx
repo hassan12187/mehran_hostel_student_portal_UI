@@ -13,10 +13,15 @@ import {
   faCheckCircle,
   faClock
 } from '@fortawesome/free-solid-svg-icons';
+import useGetQuery from '../../hooks/useGetQuery';
+import { useCustom } from '../../context/Store';
 
 const Fees = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  const {token}=useCustom();
 
+  const {data}=useGetQuery("fee","/api/student/fees",token);
+  console.log(data)
   // Fees Data
   const feesData = {
     overview: {
@@ -146,7 +151,8 @@ const Fees = () => {
           </div>
           <div className="card-content">
             <h3>Total Fees</h3>
-            <p className="amount">{formatCurrency(feesData.overview.totalFees)}</p>
+            {/* <p className="amount">{formatCurrency(feesData.overview.totalFees)}</p> */}
+            <p className="amount">PKR {data?.totalAmount}</p>
           </div>
         </div>
 
@@ -156,7 +162,8 @@ const Fees = () => {
           </div>
           <div className="card-content">
             <h3>Paid Amount</h3>
-            <p className="amount">{formatCurrency(feesData.overview.paidAmount)}</p>
+            {/* <p className="amount">{formatCurrency(feesData.overview.paidAmount)}</p> */}
+            <p className="amount">PKR {data?.totalPaid}</p>
           </div>
         </div>
 
@@ -166,7 +173,8 @@ const Fees = () => {
           </div>
           <div className="card-content">
             <h3>Due Amount</h3>
-            <p className="amount">{formatCurrency(feesData.overview.dueAmount)}</p>
+            {/* <p className="amount">{formatCurrency(feesData.overview.dueAmount)}</p> */}
+            <p className="amount">PKR {data?.balanceDue}</p>
             <span className="due-date">Due: {feesData.overview.dueDate}</span>
           </div>
         </div>
@@ -176,20 +184,20 @@ const Fees = () => {
       <div className="progress-section">
         <div className="progress-header">
           <h3>Payment Progress</h3>
-          <span>{feesData.overview.paymentProgress}% Complete</span>
+          <span>{data?.progress}% Complete</span>
         </div>
         <div className="progress-bar">
           <div 
             className="progress-fill"
-            style={{ width: `${feesData.overview.paymentProgress}%` }}
+            style={{ width: `${data?.progress}%` }}
           ></div>
         </div>
         <div className="progress-stats">
           <div className="stat">
-            <span>Paid: {formatCurrency(feesData.overview.paidAmount)}</span>
+            <span>Paid: PKR {data?.totalPaid}</span>
           </div>
           <div className="stat">
-            <span>Due: {formatCurrency(feesData.overview.dueAmount)}</span>
+            <span>Due: PKR {data?.balanceDue}</span>
           </div>
         </div>
       </div>

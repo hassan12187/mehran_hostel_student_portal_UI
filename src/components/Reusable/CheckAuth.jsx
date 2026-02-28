@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCustom } from "../../context/Store";
 import isTokenExpired from "../../services/IsExpired";
+import Axios from "./Axios";
 
 const CheckAuth=({children})=>{
-    const {token,addToken}=useCustom();
+    const {token,setToken}=useCustom();
     const navigate=useNavigate();
          useEffect(()=>{
           const verifyToken=async()=>{
@@ -13,7 +14,7 @@ const CheckAuth=({children})=>{
                 const res = await Axios.post("/refresh-token",{},{
                   withCredentials:true
                 });
-                addToken(res.data.accessToken);
+                setToken(res.data.accessToken);
               } catch (error) {
                 console.log(error);
                 navigate('/login');
@@ -24,7 +25,7 @@ const CheckAuth=({children})=>{
                 const res = await Axios.post("/refresh-token",{},{
                   withCredentials:true
                 });
-                addToken(res.data.accessToken);
+                setToken(res.data.accessToken);
               } catch (error) {
                 console.log(error);
                 navigate('/login');
