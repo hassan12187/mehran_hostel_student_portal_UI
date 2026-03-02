@@ -15,7 +15,9 @@ import {
   faEdit,
   faHistory,
   faChartBar,
-  faBell
+  faBell,
+  faTimesCircle,
+  faDownload
 } from '@fortawesome/free-solid-svg-icons';
 
 const Mess = () => {
