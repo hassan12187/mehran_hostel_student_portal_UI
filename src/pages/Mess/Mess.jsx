@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import './Mess.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -19,11 +19,26 @@ import {
   faTimesCircle,
   faDownload
 } from '@fortawesome/free-solid-svg-icons';
+import useGetQuery from '../../hooks/useGetQuery';
+import { useCustom } from '../../context/Store';
 
 const Mess = () => {
   const [activeTab, setActiveTab] = useState('menu');
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-
+  const {token}=useCustom();
+  // console.log(selectedDate);
+  const {data,isLoading}=useGetQuery("mess-menu",`/api/student/mess-menu?day=${getDayName(selectedDate)}&type=${activeTab}`,token,selectedDate,activeTab);
+  console.log(activeTab);
+  console.log(data);
+  // const processed=useMemo(()=>{
+  // if(!data)return [];
+  // Object.values(data,{length})
+  // return Object.values(data);
+  // },[data]);
+  // console.log(processed);
+  // if(isLoading)return <h1>Loading...</h1>;
+  // if(!data)return <p>No data available.</p>
+  // console.log(data);
   // Mess Statistics
   const messStats = {
     monthlyBill: 8500,
@@ -37,62 +52,63 @@ const Mess = () => {
   };
 
   // Weekly Menu Data
-  const weeklyMenu = {
-    [selectedDate]: {
-      breakfast: {
-        name: "Breakfast",
-        items: [
-          "Anday (Eggs)",
-          "Paratha",
-          "Chai",
-          "Dahi (Yogurt)"
-        ],
-        timing: "7:00 AM - 9:00 AM",
-        rating: 4.2
-      },
-      lunch: {
-        name: "Lunch",
-        items: [
-          "Chicken Karahi",
-          "Daal Maash",
-          "Chawal (Rice)",
-          "Raita",
-          "Salad"
-        ],
-        timing: "12:30 PM - 2:30 PM",
-        rating: 4.5
-      },
-      dinner: {
-        name: "Dinner",
-        items: [
-          "Beef Pulao",
-          "Chana Masala",
-          "Kachumbar Salad",
-          "Pickle",
-          "Kheer (Dessert)"
-        ],
-        timing: "7:00 PM - 9:00 PM",
-        rating: 4.3
-      }
-    }
-  };
+  // const weeklyMenu = {
+  //   [selectedDate]: {
+  //     breakfast: {
+  //       name: "Breakfast",
+  //       items: [
+  //         "Anday (Eggs)",
+  //         "Paratha",
+  //         "Chai",
+  //         "Dahi (Yogurt)"
+  //       ],
+  //       timing: "7:00 AM - 9:00 AM",
+  //       rating: 4.2
+  //     },
+  //     lunch: {
+  //       name: "Lunch",
+  //       items: [
+  //         "Chicken Karahi",
+  //         "Daal Maash",
+  //         "Chawal (Rice)",
+  //         "Raita",
+  //         "Salad"
+  //       ],
+  //       timing: "12:30 PM - 2:30 PM",
+  //       rating: 4.5
+  //     },
+  //     dinner: {
+  //       name: "Dinner",
+  //       items: [
+  //         "Beef Pulao",
+  //         "Chana Masala",
+  //         "Kachumbar Salad",
+  //         "Pickle",
+  //         "Kheer (Dessert)"
+  //       ],
+  //       timing: "7:00 PM - 9:00 PM",
+  //       rating: 4.3
+  //     }
+  //   }
+  // };
 
   // Sample Menu for different days
-  const sampleMenus = {
-    '2024-01-22': {
-      breakfast: ["Omelette", "Paratha", "Chai", "Fruit"],
-      lunch: ["Chicken Biryani", "Raita", "Salad", "Kachumber"],
-      dinner: ["Beef Nihari", "Kulcha", "Salad", "Zarda"]
-    },
-    '2024-01-23': {
-      breakfast: ["Halwa Puri", "Chana", "Chai"],
-      lunch: ["Fish Curry", "Steamed Rice", "Daal", "Salad"],
-      dinner: ["Chicken Korma", "Na", "Raita", "Fruit"]
-    }
-  };
+  // const sampleMenus = {
+  //   '2024-01-22': {
+  //     breakfast: ["Omelette", "Paratha", "Chai", "Fruit"],
+  //     lunch: ["Chicken Biryani", "Raita", "Salad", "Kachumber"],
+  //     dinner: ["Beef Nihari", "Kulcha", "Salad", "Zarda"]
+  //   },
+  //   '2024-01-23': {
+  //     breakfast: ["Halwa Puri", "Chana", "Chai"],
+  //     lunch: ["Fish Curry", "Steamed Rice", "Daal", "Salad"],
+  //     dinner: ["Chicken Korma", "Na", "Raita", "Fruit"]
+  //   }
+  // };
 
   // Current day's menu
-  const currentMenu = weeklyMenu[selectedDate] || weeklyMenu[new Date().toISOString().split('T')[0]];
+  // const currentMenu = weeklyMenu[selectedDate] || weeklyMenu[new Date().toISOString().split('T')[0]];
+  const currentMenu={};
 
   // Attendance History
   const attendanceHistory = [
@@ -143,19 +159,19 @@ const Mess = () => {
     }
   ];
 
-  // New Request State
+  // // New Request State
   const [newRequest, setNewRequest] = useState({
     type: "",
     description: "",
     date: ""
   });
 
-  // New Feedback State
-  const [newFeedback, setNewFeedback] = useState({
-    meal: "",
-    rating: 0,
-    comment: ""
-  });
+  // // New Feedback State
+  // const [newFeedback, setNewFeedback] = useState({
+  //   meal: "",
+  //   rating: 0,
+  //   comment: ""
+  // });
 
   const tabs = [
     { id: 'menu', label: 'Weekly Menu', icon: faUtensils },
@@ -165,7 +181,7 @@ const Mess = () => {
     { id: 'feedback', label: 'Feedback', icon: faStar }
   ];
 
-  const getDayName = (dateStr) => {
+  function getDayName (dateStr) {
     const date = new Date(dateStr);
     return date.toLocaleDateString('en-PK', { weekday: 'long' });
   };
@@ -183,7 +199,7 @@ const Mess = () => {
     }
   };
 
-  const renderStars = (rating) => {
+  const renderStars = (rating=5) => {
     return Array.from({ length: 5 }, (_, index) => (
       <FontAwesomeIcon
         key={index}
@@ -214,13 +230,14 @@ const Mess = () => {
       </div>
 
       <div className="meals-grid">
-        {Object.values(currentMenu).map((meal, index) => (
+        {
+        !isLoading && data?.menu?.map((meal, index) => (
           <div key={index} className="meal-card">
             <div className="meal-header">
               <h4>{meal.name}</h4>
               <div className="meal-timing">
                 <FontAwesomeIcon icon={faClock} />
-                <span>{meal.timing}</span>
+                <span>{`${meal.startTime} - ${meal.endTime}`}</span>
               </div>
             </div>
 
@@ -235,8 +252,9 @@ const Mess = () => {
 
             <div className="meal-rating">
               <div className="rating-stars">
-                {renderStars(Math.floor(meal.rating))}
-                <span className="rating-value">{meal.rating}</span>
+                {/* {renderStars(Math.floor(meal.rating))} */}
+                {renderStars(5)}
+                <span className="rating-value">{meal?.rating}</span>
               </div>
               <button className="rate-btn">
                 <FontAwesomeIcon icon={faStar} />
@@ -244,7 +262,8 @@ const Mess = () => {
               </button>
             </div>
           </div>
-        ))}
+        ))
+        }
       </div>
 
       <div className="menu-notes">
@@ -269,7 +288,7 @@ const Mess = () => {
         <h3>Meal Attendance</h3>
         <div className="attendance-stats">
           <div className="attendance-stat">
-            <span className="stat-value">{messStats.attendance}</span>
+            <span className="stat-value">{data?.attendancePercentage||0}%</span>
             <span className="stat-label">Monthly Attendance</span>
           </div>
           <div className="attendance-stat">
@@ -296,28 +315,28 @@ const Mess = () => {
             <span>Dinner</span>
             <span>Total</span>
           </div>
-          {attendanceHistory.map((record, index) => (
+          {data?.recentAttendanceHistory?.map((record, index) => (
             <div key={index} className="table-row">
-              <span>{record.date}</span>
+              <span>{new Date(record.date).toLocaleDateString()}</span>
               <span>
                 <FontAwesomeIcon 
-                  icon={record.breakfast ? faCheckCircle : faTimesCircle} 
-                  className={record.breakfast ? 'present' : 'absent'} 
+                  icon={record.Breakfast=="Present" ? faCheckCircle : faTimesCircle} 
+                  className={record.Breakfast=="Present" ? 'present' : 'absent'} 
                 />
               </span>
               <span>
                 <FontAwesomeIcon 
-                  icon={record.lunch ? faCheckCircle : faTimesCircle} 
-                  className={record.lunch ? 'present' : 'absent'} 
+                  icon={record.Lunch=="Present" ? faCheckCircle : faTimesCircle} 
+                  className={record.Lunch=="Present" ? 'present' : 'absent'} 
                 />
               </span>
               <span>
                 <FontAwesomeIcon 
-                  icon={record.dinner ? faCheckCircle : faTimesCircle} 
-                  className={record.dinner ? 'present' : 'absent'} 
+                  icon={record.Dinner=="Present" ? faCheckCircle : faTimesCircle} 
+                  className={record.Dinner=="Present" ? 'present' : 'absent'} 
                 />
               </span>
-              <span className="total-meals">{record.total}/3</span>
+              <span className="total-meals">{record.total||0}/3</span>
             </div>
           ))}
         </div>
@@ -646,7 +665,7 @@ const Mess = () => {
           </div>
           <div className="stat-badge">
             <FontAwesomeIcon icon={faClipboardList} />
-            <span>Attendance: {messStats.attendance}</span>
+            {/* <span>Attendance: {messStats?.attendance}</span> */}
           </div>
         </div>
       </div>
