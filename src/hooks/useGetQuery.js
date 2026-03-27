@@ -7,6 +7,5 @@ const useGetQuery=(queryKey,route,token,...dependencies)=> useQuery({
             enabled:!!token,
             staleTime:60*60*1000,
             cacheTime:60*60*100,
-            // initialData:initialData
         });
 export default useGetQuery;

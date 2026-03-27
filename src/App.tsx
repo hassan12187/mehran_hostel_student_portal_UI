@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
-import Layout from './components/Layout/Layout';
-import StudentDashboard from './pages/Dashboard/StudentDashboard';
-import Profile from './pages/Profile/Profile';
-import Fees from './pages/Fees/Fees';
-import Complaints from './pages/Complaints/Complaints';
-import Gatepass from './pages/Gatepass/Gatepass';
-import Mess from './pages/Mess/Mess';
-import Room from './pages/Room/Room';
-import Visitors from './pages/Visitors/Visitors';
-import Attendance from './pages/Attendance/Attendance';
-import Notices from './pages/Notices/Notices';
-import './App.css';
+import Layout from './components/Layout/Layout.jsx';
+import StudentDashboard from './pages/Dashboard/StudentDashboard.js';
+import Profile from './pages/Profile/Profile.js';
+import Fees from './pages/Fees/Fees.js';
+import Complaints from './pages/Complaints/Complaints.jsx';
+import Gatepass from './pages/Gatepass/Gatepass.jsx';
+import Mess from './pages/Mess/Mess.js';
+import Room from './pages/Room/Room.jsx';
+import Visitors from './pages/Visitors/Visitors.jsx';
+import Attendance from './pages/Attendance/Attendance.jsx';
+import Notices from './pages/Notices/Notices.jsx';
+// import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import CheckAuth from './components/Reusable/CheckAuth';
-import Login from './pages/Auth/Login/Login';
-import ChangePassword from './pages/changepassword/ChangePassword';
-import ForgotPassword from './pages/Auth/ForgotPassword/ForgotPassword';
+import CheckAuth from './components/Reusable/CheckAuth.jsx';
+// import Login from './pages/Auth/Login/Login.jsx';
+import Login from './pages/Auth/Login/Login.js';
+import ChangePassword from './pages/changepassword/ChangePassword.jsx';
+import ForgotPassword from './pages/Auth/ForgotPassword/ForgotPassword.jsx';
 
 // Main App Component
 function App() {
@@ -70,7 +71,7 @@ const router=createBrowserRouter([
     element:<CheckAuth> <Profile/></CheckAuth>
   },
   {
-    path:"/fees",
+    path:"/invoices",
     element:<CheckAuth> <Fees/></CheckAuth>
   },
   {
@@ -82,7 +83,7 @@ const router=createBrowserRouter([
     element:<CheckAuth> <Gatepass/></CheckAuth>
   },
   {
-    path:"/mess",
+    path:"/subscription",
     element:<CheckAuth> <Mess/></CheckAuth>
   },
   {
