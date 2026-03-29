@@ -3,8 +3,12 @@ import { SummaryData, RawAttendanceRecord } from '../types/attendance.types';
 const API_BASE_URL = '/api/student/attendance'; // Replace with your actual base URL or env variable
 
 export const AttendanceService = {
-  getSummary: async (from: string, to: string): Promise<SummaryData> => {
-    const response = await fetch(`${API_BASE_URL}/summary?from=${from}&to=${to}`);
+  getSummary: async (from: string, to: string,token:string): Promise<SummaryData> => {
+    const response = await fetch(`${API_BASE_URL}/summary?from=${from}&to=${to}`,{
+      headers:{
+        "Content-Type": "application/json", "Authorization": `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error('Failed to fetch attendance summary');
     
     const json = await response.json();
@@ -13,8 +17,13 @@ export const AttendanceService = {
     return json.data;
   },
 
-  getRecords: async (from: string, to: string, limit: number = 31): Promise<RawAttendanceRecord[]> => {
-    const response = await fetch(`${API_BASE_URL}?from=${from}&to=${to}&limit=${limit}`);
+  getRecords: async (from: string, to: string, limit: number = 31,token:string): Promise<RawAttendanceRecord[]> => {
+    const response = await fetch(`${API_BASE_URL}?from=${from}&to=${to}&limit=${limit}`,{
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":`Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error('Failed to fetch attendance records');
     
     const json = await response.json();

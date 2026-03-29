@@ -228,12 +228,12 @@ function TodayMeals({ meals }: { meals: AttendanceEntry[] }) {
 // ─── Quick actions ────────────────────────────────────────────────────────────
 function QuickActions({ navigate }: { navigate: (path: string) => void }) {
   const actions = [
-    { label: "Raise Complaint",  color: "var(--amber)",  bg: "rgba(245,158,11,.10)",  path: "/student/complaints/new" },
-    { label: "View Invoices",    color: "var(--accent)",  bg: "var(--accent-lo)",      path: "/student/invoices"       },
-    { label: "Mess Menu",        color: "var(--green)",  bg: "rgba(16,185,129,.10)",  path: "/student/mess-menu"      },
-    { label: "Attendance",       color: "#8b5cf6",       bg: "rgba(139,92,246,.10)",  path: "/student/attendance"     },
-    { label: "My Profile",       color: "#06b6d4",       bg: "rgba(6,182,212,.10)",   path: "/student/profile"        },
-    { label: "Settings",         color: "var(--text-sec)", bg: "var(--input-bg)",     path: "/student/settings"       },
+    { label: "Raise Complaint",  color: "var(--amber)",  bg: "rgba(245,158,11,.10)",  path: "complaints" },
+    { label: "View Invoices",    color: "var(--accent)",  bg: "var(--accent-lo)",      path: "invoices"       },
+    { label: "Mess Menu",        color: "var(--green)",  bg: "rgba(16,185,129,.10)",  path: "mess"      },
+    { label: "Attendance",       color: "#8b5cf6",       bg: "rgba(139,92,246,.10)",  path: "attendance"     },
+    { label: "My Profile",       color: "#06b6d4",       bg: "rgba(6,182,212,.10)",   path: "profile"        },
+    { label: "Settings",         color: "var(--text-sec)", bg: "var(--input-bg)",     path: "settings"       },
   ]
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>

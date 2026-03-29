@@ -11,13 +11,14 @@ import { useCustom } from "../../context/Store"
 // import { logout }    from "../../services/auth.service"
 import { useQuery }  from "@tanstack/react-query"
 import { StudentAPI } from "../../services/student.api"
+import Axios from "../Reusable/Axios"
 
 const NAV = [
   { path: "/",            label: "Dashboard",    icon: <LayoutDashboard size={16}/>, end: true  },
   { path: "/invoices",    label: "Invoices",     icon: <CreditCard      size={16}/>, end: false },
   { path: "/complaints",  label: "Complaints",   icon: <AlertCircle     size={16}/>, end: false },
   { path: "/attendance",  label: "Attendance",   icon: <CalendarDays    size={16}/>, end: false },
-  { path: "/subscription",label: "Mess",         icon: <UtensilsCrossed size={16}/>, end: false },
+  { path: "/mess",label: "Mess",         icon: <UtensilsCrossed size={16}/>, end: false },
   { path: "/profile",     label: "Profile",      icon: <User            size={16}/>, end: false },
   { path: "/settings",    label: "Settings",     icon: <Settings        size={16}/>, end: false },
 ]
@@ -35,10 +36,13 @@ export default function Layout() {
   })
 
   const name = data?.data?.profile?.student_name ?? "Student"
-  const logout=():Promise<string>=>{
-    return new Promise<string>(((val)=>{
-      return "Hassan";
-    }));
+  const logout=async()=>{
+    const result = await Axios.post("/auth/logout",{},{
+      withCredentials:true,
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    });
   };
   const handleLogout = async () => {
     await logout()

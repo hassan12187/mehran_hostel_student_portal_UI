@@ -3,12 +3,12 @@ import Layout from './components/Layout/Layout.jsx';
 import StudentDashboard from './pages/Dashboard/StudentDashboard.js';
 import Profile from './pages/Profile/Profile.js';
 import Fees from './pages/Fees/Fees.js';
-import Complaints from './pages/Complaints/Complaints.jsx';
+import Complaints from './pages/Complaints/Complaints.js';
 import Gatepass from './pages/Gatepass/Gatepass.jsx';
 import Mess from './pages/Mess/Mess.js';
 import Room from './pages/Room/Room.jsx';
 import Visitors from './pages/Visitors/Visitors.jsx';
-import Attendance from './pages/Attendance/Attendance.jsx';
+import Attendance from './pages/Attendance/Attendance.js';
 import Notices from './pages/Notices/Notices.jsx';
 // import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -62,6 +62,7 @@ const router=createBrowserRouter([
   {
     path:"/",
     element:<Layout/>,
+    errorElement:<h1>No Page Found</h1>,
     children:[
 {
     path:"/",
@@ -83,7 +84,7 @@ const router=createBrowserRouter([
     element:<CheckAuth> <Gatepass/></CheckAuth>
   },
   {
-    path:"/subscription",
+    path:"/mess",
     element:<CheckAuth> <Mess/></CheckAuth>
   },
   {
@@ -95,10 +96,10 @@ const router=createBrowserRouter([
     element:<CheckAuth> <Visitors/></CheckAuth>
   },
   
-  // {
-  //   path:"/attendance",
-  //   element:<CheckAuth> <Attendance/></CheckAuth>
-  // },
+  {
+    path:"/attendance",
+    element:<CheckAuth> <Attendance/></CheckAuth>
+  },
   // {
   //   path:"/notices",
   //   element:<CheckAuth> <Notices/></CheckAuth>
