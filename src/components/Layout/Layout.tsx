@@ -20,7 +20,6 @@ const NAV = [
   { path: "/attendance",  label: "Attendance",   icon: <CalendarDays    size={16}/>, end: false },
   { path: "/mess",label: "Mess",         icon: <UtensilsCrossed size={16}/>, end: false },
   { path: "/profile",     label: "Profile",      icon: <User            size={16}/>, end: false },
-  { path: "/settings",    label: "Settings",     icon: <Settings        size={16}/>, end: false },
 ]
 
 export default function Layout() {

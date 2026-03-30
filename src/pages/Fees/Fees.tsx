@@ -13,7 +13,7 @@ import { useCustom } from '../../context/Store';
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const fmt = (n?: number) =>
-  n !== undefined ? `PKR ${n.toLocaleString('en-PK')}` : 'PKR —';
+  n !== undefined ? `PKR ${n?.toLocaleString('en-PK')}` : 'PKR —';
 
 const fmtDate = (iso?: string) => {
   if (!iso) return '—';
@@ -135,14 +135,14 @@ const StatusBadge: React.FC<{ status: Invoice['status'] }> = ({ status }) => {
 
 const InvoiceModal: React.FC<{ id: string; onClose: () => void,token:string }> = ({ id, onClose,token }) => {
   const { data, isLoading } = useInvoiceDetailQuery(id,token);
-
+console.log(data);
   return (
     <div className="f-modal-backdrop" onClick={onClose}>
       <div className="f-modal" onClick={(e) => e.stopPropagation()}>
         <div className="f-modal-header">
           <div>
             <h2>Invoice Details</h2>
-            {data && <p className="f-modal-sub">#{data.invoiceNo}</p>}
+            {data && <p className="f-modal-sub">#{data?.invoiceNumber}</p>}
           </div>
           <button className="f-modal-close" onClick={onClose}><XIcon /></button>
         </div>
@@ -164,8 +164,8 @@ const InvoiceModal: React.FC<{ id: string; onClose: () => void,token:string }> =
               <div className="f-modal-row"><span>Category</span><strong>{data.category}</strong></div>
               {data.billingMonth && <div className="f-modal-row"><span>Billing Month</span><strong>{fmtMonth(data.billingMonth)}</strong></div>}
               {data.dueDate && <div className="f-modal-row"><span>Due Date</span><strong>{fmtDate(data.dueDate)}</strong></div>}
-              <div className="f-modal-row"><span>Paid</span><strong className="c-green">{fmt(data.paidAmount)}</strong></div>
-              <div className="f-modal-row"><span>Balance</span><strong className="c-amber">{fmt(data.balanceDue)}</strong></div>
+              <div className="f-modal-row"><span>Paid</span><strong className="c-green">{fmt(data.totalPaid)}</strong></div>
+              <div className="f-modal-row"><span>Balance</span><strong className="c-amber">{fmt(data.totalAmount>0?data.totalAmount-data.totalPaid:0)}</strong></div>
               <div className="f-modal-row"><span>Status</span><StatusBadge status={data.status} /></div>
               {data.paymentMethod && <div className="f-modal-row"><span>Payment Method</span><strong>{data.paymentMethod}</strong></div>}
               {data.transactionId && <div className="f-modal-row"><span>Transaction ID</span><code className="f-mono">{data.transactionId}</code></div>}
@@ -193,6 +193,8 @@ const OverviewTab: React.FC = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const progress = summary?.progress ?? 0;
+  console.log(summary);
+  console.log(pendingList);
 
   return (
     <div className="f-overview">
@@ -213,7 +215,7 @@ const OverviewTab: React.FC = () => {
           },
           {
             label: 'Balance Due',
-            value: isLoading ? null : fmt(summary?.balanceDue),
+            value: isLoading ? null : fmt(summary?.totalOutstanding),
             sub: summary?.nextDueDate ? `Due ${fmtDate(summary.nextDueDate)}` : undefined,
             icon: <AlertTriIcon />,
             cls: 'due',
@@ -256,7 +258,7 @@ const OverviewTab: React.FC = () => {
         </div>
         <div className="f-progress-legend">
           <span className="c-green">Paid: {isLoading ? '…' : fmt(summary?.totalPaid)}</span>
-          <span className="c-amber">Due: {isLoading ? '…' : fmt(summary?.balanceDue)}</span>
+          <span className="c-amber">Due: {isLoading ? '…' : fmt(summary?.totalOutstanding)}</span>
         </div>
       </div>
 

@@ -11,7 +11,7 @@ const CheckAuth=({children})=>{
           const verifyToken=async()=>{
             if(!token){
               try {
-                const res = await Axios.post("/api/auth/refresh",{},{
+                const res = await Axios.post("auth/refresh",{},{
                   withCredentials:true
                 });
                 setToken(res.data.accessToken);
@@ -22,7 +22,7 @@ const CheckAuth=({children})=>{
             }
                if(isTokenExpired(token)){
               try {
-                const res = await Axios.post("/api/auth/refresh",{},{
+                const res = await Axios.post("auth/refresh",{},{
                   withCredentials:true
                 });
                 setToken(res.data.accessToken);

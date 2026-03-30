@@ -22,7 +22,7 @@ export const feesKeys = {
 export const useInvoicesSummaryQuery = (token:string) =>
   useQuery({
     queryKey: feesKeys.summary(),
-    queryFn:  ()=>fetchInvoicesSummary(token).then((r)=>r.data),
+    queryFn:  ()=>fetchInvoicesSummary(token).then((r)=>r),
     staleTime: 2 * 60 * 1000, // 2 min
     retry: 1,
   });
@@ -36,7 +36,7 @@ export const useInvoicesSummaryQuery = (token:string) =>
 export const useInvoicesQuery = (params: InvoicesListParams = {},token:string) =>
   useQuery({
     queryKey: feesKeys.list(params),
-    queryFn:  () => fetchInvoices(token,params).then((r)=>r.data),
+    queryFn:  () => fetchInvoices(token,params).then((r)=>r),
     staleTime: 2 * 60 * 1000,
     retry: 1,
     placeholderData: (prev) => prev, // keep previous data while fetching new page
@@ -51,7 +51,7 @@ export const useInvoicesQuery = (params: InvoicesListParams = {},token:string) =
 export const useInvoiceDetailQuery = (id: string,token:string) =>
   useQuery({
     queryKey: feesKeys.detail(id),
-    queryFn:  () => fetchInvoiceById(token,id).then((r)=>r.data),
+    queryFn:  () => fetchInvoiceById(token,id).then((r)=>r),
     enabled:  Boolean(id),
     staleTime: 5 * 60 * 1000,
     retry: 1,

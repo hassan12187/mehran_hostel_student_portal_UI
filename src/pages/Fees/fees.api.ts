@@ -11,7 +11,7 @@ import type {
 
 // const getToken = (): string => localStorage.getItem('token') ?? '';
 
-
+const BASE=import.meta.env.VITE_API_URL || "http://localhost:8000/api"
 
 async function handleResponse<T>(res: Response): Promise<T> {
   const body = await res.json().catch(() => ({}));
@@ -24,7 +24,7 @@ async function handleResponse<T>(res: Response): Promise<T> {
 // ── GET /api/student/invoices/summary ─────────────────────────────────────────
 
 export const fetchInvoicesSummary = async (token:string): Promise<InvoicesSummary> => {
-  const res = await fetch('/api/student/invoices/summary', {
+  const res = await fetch(`${BASE}/student/invoices/summary`, {
     headers: {
   'Content-Type': 'application/json',
   Authorization: `Bearer ${token}`,
@@ -46,13 +46,14 @@ export const fetchInvoices = async (
   if (params.page)         qs.set('page',          String(params.page));
   if (params.limit)        qs.set('limit',         String(params.limit));
 
-  const res = await fetch(`/api/student/invoices?${qs.toString()}`, {
+  const res = await fetch(`${BASE}/student/invoices?${qs.toString()}`, {
     headers: {
   'Content-Type': 'application/json',
   Authorization: `Bearer ${token}`,
 },
   });
   const json = await handleResponse<{ success: boolean } & InvoicesListResponse>(res);
+  console.log(json)
   const { success: _s, ...rest } = json;
   return rest as InvoicesListResponse;
 };
@@ -60,7 +61,7 @@ export const fetchInvoices = async (
 // ── GET /api/student/invoices/:id ─────────────────────────────────────────────
 
 export const fetchInvoiceById = async (token:string,id: string): Promise<Invoice> => {
-  const res = await fetch(`/api/student/invoices/${id}`, {
+  const res = await fetch(`${BASE}/student/invoices/${id}`, {
     headers: {
   'Content-Type': 'application/json',
   Authorization: `Bearer ${token}`,
